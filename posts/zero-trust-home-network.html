@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The “Zero-Trust” Home Network: How to Isolate Your Smart Devices in Under 30 Minutes | cyber-stuff</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="post-head">
+  <a class="brand-link" href="../index.html">
+    <img class="logo-sm" src="../logo-mark.png" alt="" width="40" height="40">
+    <span>cyber-stuff</span>
+  </a>
+  <a class="back" href="../index.html#blog">&larr; Back to blog</a>
+</header>
+
+<main class="post">
+  <p class="meta">Security advice &middot; <time datetime="2026-10-05">5 October 2026</time></p>
+  <h1>The “Zero-Trust” Home Network: How to Isolate Your Smart Devices in Under 30 Minutes</h1>
+
+  <p>Imagine buying a $15 smart plug online, plugging it into your wall, and unknowingly handing a hacker the keys to your bank account.</p>
+  <p>It sounds dramatic, but it happens every single day.</p>
+  <p>When you connect a cheap smart TV, Wi-Fi security camera, or smart bulb to your primary Wi-Fi network, it sits right next to your personal laptop, tax files, and family photos. If an attacker compromises that unpatched smart plug, they don’t just control your lights—they can pivot across your home network directly into your computer.</p>
+  <p>The solution used by corporate giants and cyber experts alike? Zero-Trust Network Segmentation.</p>
+  <p>Here is how you can set it up at home in under 30 minutes—no IT degree required.</p>
+
+  <h2>What Is “Zero-Trust” (and Why Do You Need It)?</h2>
+  <p>Traditional home Wi-Fi operates like a castle with a moat: a strong Wi-Fi password keeps bad guys outside, but once inside, everyone has free access to every room.</p>
+  <p>Zero-Trust flips this logic on its head: “Never trust, always verify.”</p>
+  <p>By dividing your Wi-Fi network into isolated zones, a hacker who breaks into your smart bulb gets trapped in a digital container, completely blocked from reaching your personal devices.</p>
+
+  <figure>
+    <img src="../images/zero-trust-diagram.jpg" width="1600" height="873"
+         alt="Diagram of home Wi-Fi network segmentation: a router feeds a private zone with laptop, phone and tablet, and a separate isolated guest zone with smart TV, smart bulb and smart thermostat, divided by a firewall isolation barrier.">
+  </figure>
+
+  <h2>The 30-Minute Lockdown: 3 Easy Steps</h2>
+
+  <h3>Step 1: Divide Your Devices (5 Minutes)</h3>
+  <p>Grab a piece of paper and split your home gadgets into two distinct lists:</p>
+  <ul>
+    <li><strong>High-Trust Devices:</strong> Laptops, smartphones, tablets, primary backup drives.</li>
+    <li><strong>Low-Trust Devices:</strong> Smart TVs, smart plugs, Wi-Fi cameras, streaming sticks, gaming consoles.</li>
+  </ul>
+
+  <h3>Step 2: Turn On Your Guest Network (10 Minutes)</h3>
+  <p>You don’t need expensive enterprise hardware to segment your network. Almost every modern router has a built-in feature called Guest Network:</p>
+  <ul>
+    <li>Log into your router’s admin page (usually 192.168.1.1 or 192.168.0.1 in your browser).</li>
+    <li>Look for Guest Network Settings and turn it on.</li>
+    <li>Rename the SSID to something like Home_IoT or MyHome_Guest.</li>
+    <li>Set a strong password.</li>
+  </ul>
+
+  <h3>Step 3: Enable “Client Isolation” &amp; Reconnect (15 Minutes)</h3>
+  <p>In your router’s Guest Network settings, look for an option named “AP Isolation” or “Client Isolation” and make sure it is turned ON. If your router instead offers “Allow guests to see each other,” make sure that one is turned OFF. This prevents smart devices from communicating with each other.</p>
+  <ul>
+    <li>Move all your Low-Trust Devices over to the new Guest Wi-Fi network.</li>
+    <li>Keep your High-Trust Devices on your main Wi-Fi.</li>
+  </ul>
+
+  <h2>The Bottom Line</h2>
+  <p>Congratulations! Even if a cheap smart gadget gets compromised, the attacker is completely walled off from your private data. You’ve successfully implemented enterprise-grade security right in your living room.</p>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>News items are short summaries in my own words and always link to the original source. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+</body>
+</html>

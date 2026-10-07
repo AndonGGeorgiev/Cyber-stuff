@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cyber-stuff</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">
+    <h1 id="site-name">cyber-stuff</h1>
+    <img class="logo" src="logo-mark.png" alt="cyber-stuff logo" width="88" height="88">
+  </div>
+  <p id="site-tagline">Free cybersecurity notes and news, written for learning.</p>
+  <div class="navrow">
+    <div class="search">
+      <input type="search" id="search" placeholder="Search" aria-label="Search" autocomplete="off"
+             aria-controls="search-results" aria-expanded="false">
+      <ul id="search-results" role="listbox" hidden></ul>
+    </div>
+    <nav aria-label="Sections">
+      <a href="#blog">Blog</a>
+      <a href="#news">Cyber sources</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </nav>
+  </div>
+</header>
+
+<main class="layout">
+  <section id="blog" aria-labelledby="blog-h">
+    <h2 id="blog-h">Blog</h2>
+    <div class="tags scroller" id="blog-list" tabindex="0" role="region" aria-label="Blog posts"></div>
+  </section>
+
+  <section id="news" aria-labelledby="news-h">
+  <h2 id="news-h">Reliable cyber sources</h2>
+  <p class="lead">Trusted outlets and official advisories worth following.</p>
+  <ul class="sources scroller" id="news-list" tabindex="0" aria-label="Reliable cyber news sources"></ul>
+</section>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>News items are short summaries in my own words and always link to the original source. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+<script src="posts.js"></script>
+<script>
+(function () {
+  var esc = function (s) {
+    var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML;
+  };
+
+  document.getElementById('site-name').textContent = SITE.name;
+  document.getElementById('site-tagline').textContent = SITE.tagline;
+  document.title = SITE.name;
+
+  var blog = document.getElementById('blog-list');
+  var posts = blogPosts.length ? blogPosts : [
+    { empty: true, kind: 'Recovery tool' },
+    { empty: true, kind: 'Security advice' },
+    { empty: true, kind: 'Security advice' }
+  ];
+  blog.innerHTML = posts.map(function (p, i) {
+    if (p.empty) {
+      return '<article class="tag empty"><span class="kind">' + esc(p.kind) + '</span>' +
+        '<h3>Empty slot</h3><p>The next post will appear here.</p></article>';
+    }
+    if (p.image) {
+      return '<article class="tag photo" id="blog-' + i + '" style="background-image:url(\'' + esc(p.image) + '\')">' +
+        '<span class="kind">' + esc(p.kind) + '</span>' +
+        '<h3><a href="' + esc(p.url) + '">' + esc(p.title) + '</a></h3></article>';
+    }
+    return '<article class="tag" id="blog-' + i + '"><span class="kind">' + esc(p.kind) + '</span>' +
+      '<h3><a href="' + esc(p.url) + '">' + esc(p.title) + '</a></h3>' +
+      '<p>' + esc(p.summary) + '</p><time>' + esc(p.date) + '</time></article>';
+  }).join('');
+
+ function hostOf(u) {
+  try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; }
+}
+
+//Cybersources formula
+
+var news = document.getElementById('news-list');
+var sources = newsSources.length ? newsSources : [{ empty: true }, { empty: true }, { empty: true }, { empty: true }];
+news.innerHTML = sources.map(function (s, i) {
+  if (s.empty) {
+    return '<li class="source empty"><h3>Empty slot</h3><p>A source name, link and short description will appear here.</p></li>';
+  }
+  return '<li class="source" id="news-' + i + '">' +
+    '<span class="stype">' + esc(s.type) + '</span>' +
+    '<h3><a href="' + esc(s.url) + '" rel="noopener noreferrer" target="_blank">' + esc(s.name) + '</a></h3>' +
+    '<p>' + esc(s.description) + '</p>' +
+    '<p class="host">' + esc(hostOf(s.url)) + ' &#8599;</p></li>';
+}).join('');
+
+  // Search across blog posts, news items and the disclaimer
+  var input = document.getElementById('search');
+  var menu = document.getElementById('search-results');
+
+  function entries() {
+    var list = [];
+    blogPosts.forEach(function (p, i) {
+      list.push({ type: 'Blog', title: p.title, id: 'blog-' + i,
+        text: [p.title, p.summary, p.kind].join(' ') });
+    });
+    newsSources.forEach(function (s, i) {
+  list.push({ type: 'Source', title: s.name, id: 'news-' + i,
+    text: [s.name, s.description, s.type].join(' ') });
+  });
+    list.push({ type: 'Page', title: 'Disclaimer', id: 'disclaimer',
+      text: document.getElementById('disclaimer').textContent });
+    return list;
+  }
+
+  function closeMenu() { menu.hidden = true; input.setAttribute('aria-expanded', 'false'); }
+
+  function go(id) {
+    var el = document.getElementById(id);
+    closeMenu();
+    if (!el) return;
+    el.scrollIntoView({ block: 'center' });
+    el.classList.add('hit');
+    setTimeout(function () { el.classList.remove('hit'); }, 2500);
+  }
+
+  function runSearch() {
+    var q = input.value.trim().toLowerCase();
+    if (!q) { closeMenu(); return; }
+    var found = entries().filter(function (e) { return e.text.toLowerCase().indexOf(q) !== -1; }).slice(0, 8);
+    menu.innerHTML = found.length
+      ? found.map(function (e) {
+          return '<li role="option"><button type="button" data-id="' + esc(e.id) + '">' +
+            '<span class="rtype">' + esc(e.type) + '</span> ' + esc(e.title) + '</button></li>';
+        }).join('')
+      : '<li class="none">No results</li>';
+    menu.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  input.addEventListener('input', runSearch);
+  input.addEventListener('focus', runSearch);
+  input.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  menu.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b) go(b.getAttribute('data-id'));
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.search')) closeMenu();
+  });
+})();
+</script>
+</body>
+</html>

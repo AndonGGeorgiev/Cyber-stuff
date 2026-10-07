@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Your Smart TV Shouldn’t Talk to Your Laptop: A Practical Guide to Network Segmentation | cyber-stuff</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="post-head">
+  <a class="brand-link" href="../index.html">
+    <img class="logo-sm" src="../logo-mark.png" alt="" width="40" height="40">
+    <span>cyber-stuff</span>
+  </a>
+  <a class="back" href="../index.html#blog">&larr; Back to blog</a>
+</header>
+
+<main class="post">
+  <p class="meta"><time datetime="2026-10-05">5 October 2026</time></p>
+  <h1>Why Your Smart TV Shouldn’t Talk to Your Laptop: A Practical Guide to Network Segmentation</h1>
+
+  <p>Imagine inviting a total stranger into your house, pointing to your living room couch, and handing them the keys to your bedroom desk where all your tax documents, private photos, and banking passwords live.</p>
+  <p>Sounds ridiculous, right? Yet, this is precisely what happens every time you connect a Smart TV to the same home Wi-Fi network as your personal laptop.</p>
+  <p>Smart TVs, streaming sticks, and low-cost IoT gadgets run complex software that rarely receives security updates. Once a hacker finds a vulnerability in your TV’s outdated browser or apps, they don’t just own your television—they gain a foothold on your network. From there, it takes seconds for them to scan the local area and launch attacks against your laptop.</p>
+  <p>Here is why network segmentation matters, and how to separate your devices in under 20 minutes.</p>
+
+  <h2>The Danger of a “Flat” Home Network</h2>
+  <p>Most home Wi-Fi networks are completely “flat.” That means every single device connected to the router can freely send data packets to every other device on the network.</p>
+
+  <figure>
+    <img src="../images/tv-first.png" width="892" height="221"
+         alt="Diagram of an attack path on a flat network: Hacker to Smart TV to Local Network to Your Laptop, ending in access to passwords, tax documents and photos.">
+  </figure>
+
+  <p>If an attacker compromises your Smart TV through a malicious app or unpatched flaw, a flat network lets them perform lateral movement:</p>
+  <ul>
+    <li><strong>Network Port Scanning:</strong> Discovering your laptop, NAS storage, or personal devices.</li>
+    <li><strong>Man-in-the-Middle (MitM) Attacks:</strong> Intercepting unencrypted traffic sent across your local network.</li>
+    <li><strong>Exploiting Shared Services:</strong> Attacking open media shares, printer protocols, or remote desktop tools.</li>
+  </ul>
+
+  <h2>Network Segmentation: Your Digital Firewall</h2>
+  <p>Network segmentation breaks one physical network into multiple isolated virtual zones. By placing your Smart TV and smart home devices in an isolated network, you build an impassable digital wall.</p>
+
+  <figure>
+    <img src="../images/tv-second.png" width="847" height="152"
+         alt="Diagram of a segmented network: the Smart TV and IoT network, with internet access only, is blocked from the secure laptop network that holds private data and work.">
+  </figure>
+
+  <p>Even if your Smart TV gets fully compromised, the hacker remains trapped inside a sandbox with zero visibility into your laptop or personal files.</p>
+
+  <h2>3 Quick Steps to Segment Your Network Today</h2>
+
+  <h3>Step 1: Categorize Your Home Devices</h3>
+  <p>Group your household hardware into two strict buckets:</p>
+  <ul>
+    <li><strong>Private Zone (High Security):</strong> Work laptops, personal PCs, mobile phones, primary cloud storage/NAS.</li>
+    <li><strong>Isolated Zone (Low Security):</strong> Smart TVs, streaming dongles, smart speakers, game consoles, ambient lighting.</li>
+  </ul>
+
+  <h3>Step 2: Leverage Your Router’s “Guest Network”</h3>
+  <p>You don’t need expensive enterprise equipment to segment your traffic:</p>
+  <ul>
+    <li>Open your browser and navigate to your router’s admin portal (typically 192.168.1.1 or 192.168.0.1).</li>
+    <li>Locate the Guest Network settings and switch it on.</li>
+    <li>Assign it a distinct name, such as Home_Media_IoT.</li>
+    <li>Create a strong, unique password.</li>
+  </ul>
+
+  <h3>Step 3: Disable Local Access &amp; Reconnect</h3>
+  <ul>
+    <li>In your router’s Guest Network menu, ensure settings like “Allow guests to access local network” or “Access Intranet” are turned OFF.</li>
+    <li>Turn ON settings labeled “AP Isolation” or “Client Isolation.”</li>
+    <li>Disconnect your Smart TV, streaming devices, and smart appliances from your primary Wi-Fi, and re-connect them exclusively to the new Home_Media_IoT network.</li>
+  </ul>
+
+  <h2>Final Thoughts</h2>
+  <p>Securing your personal data doesn’t require complex configurations or costly hardware upgrades. By keeping your Smart TV isolated from your primary laptop, you effectively eliminate lateral threat movement across your home.</p>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>News items are short summaries in my own words and always link to the original source. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+</body>
+</html>
