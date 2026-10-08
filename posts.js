@@ -44,6 +44,12 @@ var blogPosts = [
 // { title: "...", summary: "...", source: "BleepingComputer", date: "2026-10-05", url: "https://..." }
 // Reliable news sources: name, link, short description, and a type label.
 var newsSources = [
+    {
+    name: "BG Leaks",
+    type: "Breach tracker",
+    url: "https://bg-leaks.xyz/",
+    description: "Searchable archive of publicly disclosed data leaks tied to Bulgarian organizations, with a live ransomware feed filtered to Bulgaria. Entries are third-party claims, so verify them at the original source."
+  },
   {
     name: "BleepingComputer",
     type: "News site",
