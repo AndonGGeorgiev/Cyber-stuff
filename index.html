@@ -52,6 +52,10 @@
 <script src="posts.js"></script>
 <script>
 (function () {
+  // Show the clean address (no "index.html") once the site is online
+if (location.protocol.indexOf('http') === 0 && /index\.html$/.test(location.pathname)) {
+  history.replaceState(null, '', location.pathname.replace(/index\.html$/, '') + location.search + location.hash);
+}
   var esc = function (s) {
     var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML;
   };
