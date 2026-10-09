@@ -57,6 +57,12 @@ var newsSources = [
     url: "https://bg-leaks.xyz/",
     description: "Searchable archive of publicly disclosed data leaks tied to Bulgarian organizations, with a live ransomware feed filtered to Bulgaria. Entries are third-party claims, so verify them at the original source."
   },
+    {
+    name: "Have I Been Pwned",
+    type: "Breach checker",
+    url: "https://haveibeenpwned.com/",
+    description: "Free service by security researcher Troy Hunt to check whether your email address or phone number appeared in a known data breach, with a searchable list of breached sites."
+  },
   {
     name: "BleepingComputer",
     type: "News site",
@@ -87,10 +93,23 @@ var newsSources = [
     url: "https://www.cisa.gov/news-events/cybersecurity-advisories",
     description: "Official US government alerts and guidance on active threats and vulnerabilities."
   },
+   {
+    name: "The DFIR Report",
+    type: "Official advisories",
+    url: "https://thedfirreport.com/",
+    description: "Official US government alerts and guidance on active threats and vulnerabilities."
+  },
     {
     name: "Dark Reading",
     type: "News site",
     url: "https://www.darkreading.com/",
     description: "News and analysis for security professionals on threats, vulnerabilities, cloud security and data breaches."
+  },
+  {
+    name: "GDPR Enforcement Tracker",
+    type: "Tracker",
+    url: "https://www.enforcementtracker.com/",
+    description: "Tracking official GDPR fines, regulatory penalties, and legal consequences stemming from security breaches and privacy violations"
   }
+  
 ];;
