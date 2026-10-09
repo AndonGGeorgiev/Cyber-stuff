@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Mailboxes of the Web: Everything You Need to Know About IP Addresses | cyber-stuff</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="post-head">
+  <a class="brand-link" href="../index.html">
+    <img class="logo-sm" src="../logo-mark.png" alt="" width="40" height="40">
+    <span>cyber-stuff</span>
+  </a>
+  <a class="back" href="../index.html#blog">&larr; Back to blog</a>
+</header>
+
+<main class="post">
+  <p class="meta"><time datetime="2026-10-09">9 October 2026</time></p>
+  <h1>Digital Mailboxes of the Web: Everything You Need to Know About IP Addresses</h1>
+
+  <p>Imagine trying to mail a physical letter without putting a street address or zip code on the envelope. The postal service would have no idea where to route it or where to deliver the reply.</p>
+  <p>In the digital world, IP addresses (Internet Protocol addresses) serve that exact purpose. Every smartphone, laptop, smart TV, router, and website server relies on an IP address to send, receive, and route data across global networks.</p>
+  <p>Here is a practical breakdown of how IP addresses work, their core types, why they matter for your digital security, and actionable steps to safeguard your home network.</p>
+
+  <h2>What is an IP Address &amp; How Does It Work?</h2>
+  <p>An Internet Protocol address is a unique numerical or alphanumeric string assigned to any device connected to a network.</p>
+  <p>When you open a Web browser and search for a site, your device breaks that request into tiny data units called packets. Each packet includes:</p>
+  <ul>
+    <li><strong>The Sender IP Address:</strong> Where the data came from (your device).</li>
+    <li><strong>The Destination IP Address:</strong> Where the data needs to go (e.g., the server hosting google.com).</li>
+  </ul>
+  <p>Network routers examine these destination labels to deliver data packets across the internet and return information directly to your screen.</p>
+
+<pre style="overflow-x:auto;padding:1rem;margin:0 0 1.5rem;background:#0b1d3d;border:1px solid #1f3d68;border-radius:4px;font-size:.85rem;line-height:1.5;color:#e6f4ff">[ Your Device ] ---- (Data Packet with IP) ----> [ Internet Router ] ----> [ Website Server ]
+  (Sender IP)                                                              (Destination IP)</pre>
+
+  <h2>The Core Types of IP Addresses</h2>
+  <p>IP addresses are categorized across two distinct layers: Network Scope and Address Structure.</p>
+
+  <h3>1. Public vs. Private IP Addresses</h3>
+
+  <figure>
+    <img src="../images/ip-structure.png" width="735" height="330" style="background:transparent;border:0"
+         alt="Diagram of a home network: the Internet connects to a public IP address assigned by your ISP to the router, and the home Wi-Fi router connects to two devices with private IP addresses, a PC at 192.168.1.10 and a phone at 192.168.1.15.">
+  </figure>
+
+  <ul>
+    <li><strong>Public IP Address:</strong> The address visible to the outside world. Assigned to your router by your Internet Service Provider (ISP), it acts as your household’s single front door on the internet.</li>
+    <li><strong>Private IP Address:</strong> Internal numbers assigned by your home router to devices inside your local Wi-Fi network (commonly starting with 192.168.x.x or 10.x.x.x). External websites cannot see your private IP.</li>
+  </ul>
+
+  <h3>2. Static vs. Dynamic IP Addresses</h3>
+  <ul>
+    <li><strong>Dynamic IP Addresses:</strong> Assigned automatically and changed periodically by your ISP. Most home internet connections use dynamic IPs because they are cost-effective and easy to manage.</li>
+    <li><strong>Static IP Addresses:</strong> Fixed, permanent numbers that never change. Primarily used by businesses, web servers, and smart home enthusiasts running remote-access security cameras or local servers.</li>
+  </ul>
+
+  <h3>3. IPv4 vs. IPv6 Architecture</h3>
+  <p>As billions of devices connected to the internet, the original address format ran out of available numbers. This led to an upgraded standard:</p>
+
+  <figure>
+    <img src="../images/ip-table.png" width="851" height="412" style="background:transparent;border:0"
+         alt="Comparison table of IPv4 and IPv6. Format: 32-bit numerical versus 128-bit alphanumeric. Example: 192.168.1.1 versus 2001:0db8:85a3. Address pool: about 4.3 billion versus 340 undecillion. Separators: periods versus colons. Security: dependent on external protocols versus IPsec natively supported.">
+  </figure>
+
+  <h2>Why Is Your IP Address Important?</h2>
+  <p>Your public IP address reveals crucial metadata about your digital connection:</p>
+  <ul>
+    <li><strong>Approximate Location Tracking:</strong> Websites and ad networks use your IP to approximate your geographic location (city, region, and postal code area).</li>
+    <li><strong>Content Restrictions:</strong> Streaming providers use IP geolocation to enforce regional media licensing.</li>
+    <li><strong>Targeted Scanning &amp; Exploitation:</strong> Open public IP addresses can be scanned by malicious bots looking for unpatched router vulnerabilities or unsecured open ports.</li>
+  </ul>
+
+  <h2>Practical Rules for Securing Your Home IP Address</h2>
+  <p>Protecting your home IP address prevents direct targeting and blocks tracking attempts. Here are four actionable practices to secure your connection:</p>
+
+  <h3>1. Use a Virtual Private Network (VPN)</h3>
+  <p>A reputable VPN encrypts your web traffic and routes it through a remote server. This masks your real public IP address and replaces it with the VPN server’s IP, shielding your approximate location from websites and trackers.</p>
+
+  <h3>2. Disable Universal Plug and Play (UPnP) on Your Router</h3>
+  <p>UPnP allows smart gadgets to automatically open router ports to communicate externally. However, misconfigured UPnP exposes internal network devices directly to the internet.</p>
+  <p><strong>Action:</strong> Log into your router admin panel (usually 192.168.1.1 or 192.168.0.1 in your browser) and turn UPnP Off.</p>
+
+  <h3>3. Change Default Router Admin Passwords</h3>
+  <p>Attackers frequently run automated scans across public IP ranges looking for routers using factory default admin credentials (like admin / password).</p>
+  <p><strong>Action:</strong> Update your router’s administration account password to a strong, unique 16+ character passphrase.</p>
+
+  <h3>4. Regularly Update Router Firmware</h3>
+  <p>Outdated router software leaves open security holes that permit remote access directly via your public IP address.</p>
+  <p><strong>Action:</strong> Enable automatic firmware updates inside your router settings or check the manufacturer’s website quarterly for official security updates.</p>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>Links lead to the original sources, which belong to their respective owners. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+</body>
+</html>
