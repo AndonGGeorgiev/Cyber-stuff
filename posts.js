@@ -7,7 +7,14 @@ var SITE = {
 // Blog posts. kind is "Recovery tool" or "Security advice".
 // Example:
 // { kind: "Security advice", title: "...", summary: "...", date: "2026-10-05", url: "posts/my-first-post.html" }
-var blogPosts = [  
+var blogPosts = [ 
+    {
+    title: "Digital Mailboxes of the Web: Everything You Need to Know About IP Addresses",
+    summary: "How IP addresses work, the main types, why they matter for your security, and four steps to protect your home network.",
+    date: "2026-10-09",
+    url: "posts/ip-addresses-explained.html",
+    image: "images/ip-headline.jpg"
+  },
   {
     title: "Stop Reusing Your Passwords: The 15-Minute Blueprint to Total Password Sanity",
     summary: "Why reused passwords get you breached, how seven password managers compare, and a 15-minute plan to get started.",
