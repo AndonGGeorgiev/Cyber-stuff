@@ -9,6 +9,13 @@ var SITE = {
 // { kind: "Security advice", title: "...", summary: "...", date: "2026-10-05", url: "posts/my-first-post.html" }
 var blogPosts = [ 
     {
+    title: "The Privacy Trio: Proxies, VPNs, and VPS",
+    summary: "What a proxy, a VPN and a VPS each do, how five popular VPN providers compare, and how to choose the right tool.",
+    date: "2026-10-09",
+    url: "posts/privacy-trio-proxy-vpn-vps.html",
+    image: "images/privacy-trio-headline.jpg"
+  },
+    {
     title: "Digital Mailboxes of the Web: Everything You Need to Know About IP Addresses",
     summary: "How IP addresses work, the main types, why they matter for your security, and four steps to protect your home network.",
     date: "2026-10-09",
