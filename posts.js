@@ -112,4 +112,4 @@ var newsSources = [
     description: "Tracking official GDPR fines, regulatory penalties, and legal consequences stemming from security breaches and privacy violations"
   }
   
-];;
+];
