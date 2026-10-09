@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Privacy Trio: Proxies, VPNs, and VPS | cyber-stuff</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="post-head">
+  <a class="brand-link" href="../index.html">
+    <img class="logo-sm" src="../logo-mark.png" alt="" width="40" height="40">
+    <span>cyber-stuff</span>
+  </a>
+  <a class="back" href="../index.html#blog">&larr; Back to blog</a>
+</header>
+
+<main class="post">
+  <p class="meta"><time datetime="2026-10-09">9 October 2026</time></p>
+  <h1>The Privacy Trio: Proxies, VPNs, and VPS</h1>
+
+  <p>Imagine sending a letter in the mail, but you don’t want anyone—not your neighbors, not the post office, and not the recipient—to track where you live or read what’s inside.</p>
+  <p>How would you do it?</p>
+  <ul>
+    <li>You could pay a middleman to drop off the letter for you (<strong>Proxy</strong>).</li>
+    <li>You could lock the letter inside an unbreakable, opaque metal box that only the recipient can open (<strong>VPN</strong>).</li>
+    <li>Or you could rent a private, secure apartment in another country and run your mail business entirely from there (<strong>VPS</strong>).</li>
+  </ul>
+  <p>In the world of cybersecurity, Proxies, VPNs, and Virtual Private Servers (VPS) are three distinct tools designed to protect your identity, bypass restrictions, and give you control over your online presence. Here is everything you need to know in plain English.</p>
+
+  <h2>1. Quick Comparison: What Are They &amp; What Do They Do?</h2>
+
+  <figure>
+    <img src="../images/privacy-trio-schematic.png" width="847" height="271" style="background:transparent;border:0"
+         alt="Three connection paths from your device. Proxy: plain data goes through the proxy to the website, which sees the proxy address, but traffic is unencrypted. VPN: an encrypted tunnel to the VPN and then the website, 100% encrypted and hidden from your ISP and hackers. VPS: remote access to a remote PC in the cloud that runs its own operating system, apps and dedicated IP address, and then reaches the internet.">
+  </figure>
+
+  <h3>A. Proxy (The Middleman)</h3>
+  <ul>
+    <li><strong>What it is:</strong> An intermediate server that sits between your browser and the internet.</li>
+    <li><strong>How it works:</strong> When you visit a site, your request goes to the proxy first. The proxy fetches the webpage for you and passes it back, hiding your real home IP address.</li>
+    <li><strong>Best used for:</strong> Quick, lightweight tasks like bypassing simple geo-blocks or web filters at school or work.</li>
+    <li><strong>The Drawback:</strong> Most standard proxies do not encrypt your internet traffic. Your Internet Service Provider (ISP) and network admins can still see what you are doing.</li>
+  </ul>
+
+  <h3>B. VPN (The Encrypted Shield)</h3>
+  <ul>
+    <li><strong>What it is:</strong> Virtual Private Network. It acts like a proxy, but adds a powerful layer of end-to-end encryption.</li>
+    <li><strong>How it works:</strong> A VPN creates an encrypted “tunnel” between your device and a secure server. All data passing through this tunnel is completely unreadable to outsiders, including hackers on public Wi-Fi and your ISP.</li>
+    <li><strong>Best used for:</strong> Everyday privacy, secure online banking, public Wi-Fi protection, and streaming region-locked content.</li>
+    <li><strong>The Drawback:</strong> Can slightly reduce your internet speed depending on server distance.</li>
+  </ul>
+
+  <h3>C. VPS (Your Private Computer in the Cloud)</h3>
+  <ul>
+    <li><strong>What it is:</strong> Virtual Private Server. A full virtual computer hosted in a data center that you can control remotely.</li>
+    <li><strong>How it works:</strong> Instead of just rerouting traffic, a VPS gives you an entire operating system (Linux or Windows) running 24/7 with its own dedicated IP address, CPU, and RAM.</li>
+    <li><strong>Best used for:</strong> Hosting websites, running trading bots, hosting private game servers, or setting up your own custom VPN server.</li>
+    <li><strong>The Drawback:</strong> Requires technical knowledge to configure and maintain securely.</li>
+  </ul>
+
+  <h2>2. Why Should a Non-Technical Person Care?</h2>
+  <p>If you aren’t a hacker or an IT engineer, why do these tools matter in everyday life?</p>
+  <ul>
+    <li><strong>Public Wi-Fi Defense:</strong> Unencrypted coffee shop or airport Wi-Fi networks allow hackers on the same network to intercept unencrypted logins, session cookies, and personal data. A VPN encrypts 100% of your mobile and laptop traffic.</li>
+    <li><strong>Stopping ISP &amp; Ad Tracking:</strong> Your Internet Service Provider logs every domain name you visit and sells that aggregated browsing data to advertising networks. A VPN hides your browsing habits from your ISP.</li>
+    <li><strong>Bypassing Censorship &amp; Regional Restrictions:</strong> Whether traveling abroad and trying to access home streaming subscriptions or bypassing local content blocks, Proxies and VPNs let you select your digital location.</li>
+    <li><strong>24/7 Cloud Tasks:</strong> If you need an application to stay online 24/7 without keeping your home laptop powered on, a VPS runs continuously in the cloud for dollars a month.</li>
+  </ul>
+
+  <h2>3. Top VPN Providers Compared</h2>
+  <p>Not all VPNs are created equal. Free, untrusted VPN apps often log and sell your browsing data. Below is a breakdown of the most reliable and audited commercial VPN providers:</p>
+
+  <div class="table-wrap" role="region" aria-label="VPN providers comparison table" tabindex="0">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th scope="col">Provider</th>
+          <th scope="col">Best for</th>
+          <th scope="col">Free plan available</th>
+          <th scope="col">Monthly price range</th>
+          <th scope="col">Key advantages</th>
+          <th scope="col">Disadvantages</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Proton VPN</th>
+          <td>Privacy &amp; Free Tier</td>
+          <td>Yes (Unlimited data, free servers in several countries)</td>
+          <td>Free – ~$4.99/mo</td>
+          <td><ul><li>Based in privacy-friendly Switzerland</li><li>Strictly audited No-Logs policy</li><li>Excellent, unlimited free tier</li></ul></td>
+          <td><ul><li>Free tier limits speed and location choices</li></ul></td>
+        </tr>
+        <tr>
+          <th scope="row">Mullvad VPN</th>
+          <td>Anonymity &amp; Simplicity</td>
+          <td>No</td>
+          <td>Flat €5/mo (~$5.50/mo)</td>
+          <td><ul><li>No email required to create an account</li><li>Accepts crypto and cash payments</li><li>Transparent flat-rate pricing</li></ul></td>
+          <td><ul><li>Lacks specialized streaming bypass features</li></ul></td>
+        </tr>
+        <tr>
+          <th scope="row">NordVPN</th>
+          <td>All-Around Security &amp; Speed</td>
+          <td>No (30-day money-back guarantee)</td>
+          <td>~$3.09 – $12.99/mo</td>
+          <td><ul><li>Fast proprietary NordLynx protocol</li><li>Built-in malware &amp; ad blocking</li><li>Large global server footprint</li></ul></td>
+          <td><ul><li>App interface can feel crowded on mobile</li></ul></td>
+        </tr>
+        <tr>
+          <th scope="row">ExpressVPN</th>
+          <td>Streaming &amp; Ease of Use</td>
+          <td>No (30-day money-back guarantee)</td>
+          <td>~$6.67 – $12.95/mo</td>
+          <td><ul><li>Exceptionally fast connection speeds</li><li>Works seamlessly on smart TVs &amp; routers</li><li>Highly intuitive user interface</li></ul></td>
+          <td><ul><li>Pricier than competitors</li></ul></td>
+        </tr>
+        <tr>
+          <th scope="row">Surfshark</th>
+          <td>Unlimited Devices &amp; Families</td>
+          <td>No (30-day money-back guarantee)</td>
+          <td>~$2.19 – $15.45/mo</td>
+          <td><ul><li>Unlimited simultaneous device connections</li><li>Built-in cookie pop-up blocker</li><li>Great price-to-value ratio</li></ul></td>
+          <td><ul><li>Server speeds can occasionally vary</li></ul></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>4. How to Choose the Right Tool for You</h2>
+  <p>Use this quick decision checklist:</p>
+  <ul>
+    <li><strong>Use a Proxy if:</strong> You just need to quickly unblock a simple website on a school/work computer and don’t care about encryption or security.</li>
+    <li><strong>Use a VPN if:</strong> You want hassle-free, one-click privacy for your phone and laptop when browsing, using public Wi-Fi, or streaming.</li>
+    <li><strong>Use a VPS if:</strong> You are building a website, running scripts/bots 24/7, or want full administrative control over a cloud server.</li>
+  </ul>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>Links lead to the original sources, which belong to their respective owners. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+</body>
+</html>
