@@ -1,5 +1,5 @@
 # Cyber-stuff
-educational crypto-stuff platform
+educational cyber-stuff platform
 # cyber-stuff
 
 A free, educational cybersecurity blog with a curated list of reliable cyber news sources.
