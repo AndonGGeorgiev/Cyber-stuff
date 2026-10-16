@@ -354,4 +354,4 @@ img { max-width: 100%; }
 .source .host { margin: 0; font-size: .85rem; color: var(--teal); }
 .source.empty { border-style: dashed; background: transparent; }
 .source.empty h3 { color: var(--slate); }
-.visits { margin: 1rem 0 0; font-size: .8rem; color: var(--slate); }
+
