@@ -47,6 +47,7 @@
   <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
   <p>News items are short summaries in my own words and always link to the original source. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
   <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+  <p class="visits">Total visits: <span id="visit-count">–</span></p>
 </footer>
 
 <script src="posts.js"></script>
@@ -158,6 +159,15 @@ news.innerHTML = sources.map(function (s, i) {
   document.addEventListener('click', function (e) {
     if (!e.target.closest('.search')) closeMenu();
   });
+  
+// Show the total visit count from GoatCounter
+(function () {
+  var r = new XMLHttpRequest();
+  r.addEventListener('load', function () {
+    try { document.getElementById('visit-count').textContent = JSON.parse(this.responseText).count; } catch (e) {}
+  });
+  r.open('GET', 'https://cyberstuff.goatcounter.com/counter/TOTAL.json');
+  r.send();
 })();
 </script>
   <script data-goatcounter="https://cyberstuff.goatcounter.com/count"
