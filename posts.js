@@ -71,12 +71,6 @@ var newsSources = [
     url: "https://www.cybercrime.bg/",
     description: "Website of the Bulgarian police's cybercrime directorate, with cybersecurity advice for the public. Content is in Bulgarian."
   },  
-  {
-    name: "Cybercrime Directorate (GDBOP, Bulgaria)",
-    type: "Official source",
-    url: "https://www.cybercrime.bg/",
-    description: "Website of the Bulgarian police's cybercrime directorate, with cybersecurity advice for the public. Content is in Bulgarian."
-  }
     {
     name: "BG Leaks",
     type: "Breach tracker",
