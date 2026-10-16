@@ -159,19 +159,7 @@ news.innerHTML = sources.map(function (s, i) {
   document.addEventListener('click', function (e) {
     if (!e.target.closest('.search')) closeMenu();
   });
-  
-// Show the total visit count from GoatCounter
-(function () {
-  var r = new XMLHttpRequest();
-  r.addEventListener('load', function () {
-    try { document.getElementById('visit-count').textContent = JSON.parse(this.responseText).count; } catch (e) {}
-  });
-  r.open('GET', 'https://cyberstuff.goatcounter.com/counter/TOTAL.json');
-  r.send();
-})()
 })();
 </script>
-  <script data-goatcounter="https://cyberstuff.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
