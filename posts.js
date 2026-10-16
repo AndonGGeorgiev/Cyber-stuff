@@ -65,19 +65,19 @@ var blogPosts = [
 // { title: "...", summary: "...", source: "BleepingComputer", date: "2026-10-05", url: "https://..." }
 // Reliable news sources: name, link, short description, and a type label.
 var newsSources = [
-    {
-    name: "Cybercrime Directorate (GDBOP, Bulgaria)",
-    type: "Official source",
-    url: "https://www.cybercrime.bg/",
-    description: "Website of the Bulgarian police's cybercrime directorate, with cybersecurity advice for the public. Content is in Bulgarian."
-  },  
-    {
+  {
     name: "BG Leaks",
     type: "Breach tracker",
     url: "https://bg-leaks.xyz/",
     description: "Searchable archive of publicly disclosed data leaks tied to Bulgarian organizations, with a live ransomware feed filtered to Bulgaria. Entries are third-party claims, so verify them at the original source."
   },
-   {
+  {
+    name: "Cybercrime Directorate (GDBOP, Bulgaria)",
+    type: "Official source",
+    url: "https://www.cybercrime.bg/",
+    description: "Website of the Bulgarian police's cybercrime directorate, with cybersecurity advice for the public. Content is in Bulgarian."
+  },
+  {
     name: "Have I Been Pwned",
     type: "Breach checker",
     url: "https://haveibeenpwned.com/",
@@ -113,13 +113,13 @@ var newsSources = [
     url: "https://www.cisa.gov/news-events/cybersecurity-advisories",
     description: "Official US government alerts and guidance on active threats and vulnerabilities."
   },
-    {
+  {
     name: "The DFIR Report",
     type: "Research reports",
     url: "https://thedfirreport.com/",
     description: "In-depth analyses of real intrusions, including ransomware cases, with timelines, attacker tools and detection ideas for defenders."
   },
-    {
+  {
     name: "Dark Reading",
     type: "News site",
     url: "https://www.darkreading.com/",
@@ -131,5 +131,4 @@ var newsSources = [
     url: "https://www.enforcementtracker.com/",
     description: "Searchable database of official GDPR fines and regulatory penalties, showing the consequences of security breaches and privacy violations."
   }
-  
 ];
