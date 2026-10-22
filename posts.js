@@ -7,7 +7,14 @@ var SITE = {
 // Blog posts. kind is "Recovery tool" or "Security advice".
 // Example:
 // { kind: "Security advice", title: "...", summary: "...", date: "2026-10-05", url: "posts/my-first-post.html" }
-var blogPosts = [
+var blogPosts = [  
+  {
+    title: "The Digital Immune System: A Complete Guide to Antivirus Software",
+    summary: "How antivirus software detects threats, what it protects you from, how popular antivirus tools compare, and four rules for keeping it working properly.",
+    date: "2026-10-19",
+    url: "posts/antivirus-complete-guide.html",
+    image: "images/antivirus-headline.jpg"
+  },
     {
     title: "Deception in Your Inbox and Inbox Messages: How to Spot Phishing and Smishing Before It’s Too Late",
     summary: "How phishing emails and smishing texts trick you, the red flags to look for, and a safety checklist to stay protected.",
