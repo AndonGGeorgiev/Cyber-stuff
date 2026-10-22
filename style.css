@@ -355,3 +355,41 @@ img { max-width: 100%; }
 .source.empty { border-style: dashed; background: transparent; }
 .source.empty h3 { color: var(--slate); }
 
+/* Phishing domain checker */
+.check-form label { display: block; margin: 1.5rem 0 .5rem; font-weight: 600; }
+.check-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+.check-row input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  font: inherit;
+  font-size: 1rem;
+  padding: .7rem .9rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.check-row input::placeholder { color: var(--slate); }
+.check-row input:focus-visible, .check-row button:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.check-row button {
+  font: inherit;
+  font-weight: 700;
+  padding: .7rem 1.4rem;
+  color: #04112b;
+  background: var(--amber);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.check-result { margin: 1.5rem 0 2rem; min-height: 1rem; }
+.check-box { padding: 1rem 1.2rem; border: 1px solid var(--line); border-left-width: 8px; border-radius: 4px; background: var(--card); }
+.check-box h3 { margin: 0 0 .5rem; font-family: var(--serif); font-size: 1.25rem; color: #fff; }
+.check-box p { margin: 0 0 .5rem; font-size: 1rem; }
+.check-box.bad  { border-left-color: #ff6b6b; background: rgba(255, 90, 90, .10); }
+.check-box.warn { border-left-color: #f5b942; background: rgba(245, 185, 66, .10); }
+.check-box.ok   { border-left-color: var(--teal); }
+.check-box.info { border-left-color: var(--line); }
+.check-details { display: grid; grid-template-columns: max-content 1fr; gap: .25rem 1rem; margin: .8rem 0 0; font-size: .95rem; }
+.check-details dt { color: var(--slate); }
+.check-details dd { margin: 0; overflow-wrap: anywhere; }
+
