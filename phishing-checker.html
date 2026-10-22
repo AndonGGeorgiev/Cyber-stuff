@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulgarian Phishing Domain Checker | cyber-stuff</title>
+<meta name="description" content="Check whether a website address appears in a public list of phishing domains impersonating Bulgarian couriers, government e-services and toll services.">
+<link rel="canonical" href="https://cyber-stuff.online/phishing-checker.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="post-head">
+  <a class="brand-link" href="index.html">
+    <img class="logo-sm" src="logo-mark.png" alt="" width="40" height="40">
+    <span>cyber-stuff</span>
+  </a>
+  <a class="back" href="index.html">&larr; Back to home</a>
+</header>
+
+<main class="post checker">
+  <h1>Bulgarian Phishing Domain Checker</h1>
+  <p>Got a suspicious link in a text message or email? Paste the website address below to see whether it appears in a public list of phishing domains that imitate Bulgarian courier companies (Econt, Speedy, Bulgaria Post), the Ministry of Interior e-services portal and the toll and vignette services.</p>
+
+  <form id="check-form" class="check-form" novalidate>
+    <label for="check-input">Website address or domain</label>
+    <div class="check-row">
+      <input type="text" id="check-input" name="domain" placeholder="e.g. speedy.bg-pk.cfd" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit">Check</button>
+    </div>
+  </form>
+
+  <div id="check-result" class="check-result" aria-live="polite"></div>
+
+  <h2>How to read the result</h2>
+  <ul>
+    <li><strong>Found in the list:</strong> do not open the link and do not enter any information.</li>
+    <li><strong>Not found:</strong> this does <em>not</em> mean the site is safe. New phishing sites appear every day, and this list only covers a few Bulgarian brands. Never enter passwords or card details through a link you received. Open the official website or app yourself instead.</li>
+  </ul>
+
+  <h2>About the data</h2>
+  <p>The list comes from the public <a href="https://github.com/georgi-i/detectopod" rel="noopener noreferrer" target="_blank">Detectopod</a> threat feed, which scans for look-alike domains automatically and is updated regularly. Automated detection can make mistakes, so treat a match as a strong warning and not as proof.</p>
+  <p>Your input is checked in your own browser and is not sent to this site. When the page opens, it downloads the public list from GitHub.</p>
+  <p>This tool only compares an address with a list. It is not a security scan.</p>
+</main>
+
+<footer id="disclaimer">
+  <h2>Disclaimer</h2>
+  <p>This site is completely free. It has no ads, no donations and no paid content. Everything here is published for educational purposes only.</p>
+  <p>Links lead to the original sources, which belong to their respective owners. If you are a rights holder and want something corrected or removed, contact me and I will act on it promptly.</p>
+  <p>Content here is general information, not legal or professional advice, and it reflects my own views, not those of any employer or organisation.</p>
+</footer>
+
+<script>
+(function () {
+  var FEED_URL = 'https://raw.githubusercontent.com/georgi-i/detectopod/main/feed/phishing_feed.json';
+
+  var form = document.getElementById('check-form');
+  var input = document.getElementById('check-input');
+  var out = document.getElementById('check-result');
+  var index = null;       // domain -> feed entry
+  var loading = null;     // promise while the list is downloading
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function norm(d) {
+    return String(d || '').trim().toLowerCase().replace(/\.$/, '').replace(/^www\./, '');
+  }
+
+  // Turn whatever the visitor pasted (a full link, an email address, a bare domain) into a hostname
+  function hostFrom(raw) {
+    var s = String(raw || '').trim();
+    if (!s) return '';
+    s = s.replace(/^[a-z][a-z0-9+.\-]*:\/\//i, '');   // protocol
+    s = s.split(/[\/?#]/)[0];                          // path, query, fragment
+    s = s.replace(/^.*@/, '');                         // user@ part
+    s = s.replace(/:\d+$/, '');                        // port
+    try { s = new URL('http://' + s).hostname; } catch (e) { return ''; }
+    s = norm(s);
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : '';
+  }
+
+  function loadFeed() {
+    if (index) return Promise.resolve(index);
+    if (loading) return loading;
+    loading = fetch(FEED_URL, { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (data) {
+        if (!Array.isArray(data)) data = (data && data.domains) || [];
+        var map = {};
+        data.forEach(function (item) {
+          var d = norm(typeof item === 'string' ? item : item && item.domain);
+          if (d) map[d] = (typeof item === 'string') ? { domain: d } : item;
+        });
+        index = map;
+        return index;
+      })
+      .catch(function (e) { loading = null; throw e; });
+    return loading;
+  }
+
+  function lookup(host) {
+    var parts = host.split('.');
+    for (var i = 0; i <= parts.length - 2; i++) {
+      var cand = parts.slice(i).join('.');
+      if (index[cand]) return { type: i === 0 ? 'exact' : 'parent', entry: index[cand], matched: cand };
+    }
+    var kids = Object.keys(index).filter(function (d) { return d.length > host.length && d.slice(-(host.length + 1)) === '.' + host; });
+    if (kids.length) return { type: 'children', kids: kids.slice(0, 5), total: kids.length };
+    return null;
+  }
+
+  function dateOnly(s) {
+    var d = new Date(s);
+    return isNaN(d) ? '' : d.toISOString().slice(0, 10);
+  }
+
+  function details(entry) {
+    var dl = el('dl', 'check-details');
+    function row(k, v) { if (v === '' || v == null) return; dl.appendChild(el('dt', null, k)); dl.appendChild(el('dd', null, v)); }
+    row('Domain', entry.domain);
+    if (entry.score != null) row('Risk score', entry.score + ' / 100');
+    row('First detected', entry.detected_at ? dateOnly(entry.detected_at) : '');
+    row('Keywords', Array.isArray(entry.keywords) ? entry.keywords.join(', ') : '');
+    var a = entry.llm_analysis;
+    if (a) {
+      row('Automated review', [a.decision, a.threat_level, a.confidence != null ? a.confidence + '% confidence' : ''].filter(Boolean).join(' · '));
+    }
+    return dl;
+  }
+
+  function show(kind, title, lines, extra) {
+    out.textContent = '';
+    var box = el('div', 'check-box ' + kind);
+    box.appendChild(el('h3', null, title));
+    lines.forEach(function (l) { box.appendChild(el('p', null, l)); });
+    if (extra) box.appendChild(extra);
+    out.appendChild(box);
+  }
+
+  function check(raw) {
+    var host = hostFrom(raw);
+    if (!host) {
+      show('info', 'Enter a valid address', ['Type or paste a website address such as example.com or https://example.com/page.']);
+      return;
+    }
+    show('info', 'Checking ' + host + '…', []);
+    loadFeed().then(function () {
+      var hit = lookup(host);
+      var total = Object.keys(index).length;
+      if (hit && hit.type === 'exact') {
+        show('bad', 'Found in the phishing list', [
+          host + ' is listed as a phishing domain. Do not open it and do not enter any information.',
+          'If you already entered a password or card details, change that password right away and contact your bank.'
+        ], details(hit.entry));
+      } else if (hit && hit.type === 'parent') {
+        show('bad', 'Its parent domain is in the phishing list', [
+          host + ' belongs to ' + hit.matched + ', which is listed as a phishing domain. Do not open it.'
+        ], details(hit.entry));
+      } else if (hit && hit.type === 'children') {
+        show('warn', 'Not listed, but related addresses are', [
+          host + ' is not in the list, but ' + hit.total + ' address' + (hit.total === 1 ? '' : 'es') + ' under it ' + (hit.total === 1 ? 'is' : 'are') + ': ' + hit.kids.join(', ') + '.',
+          'Be careful with this domain.'
+        ]);
+      } else {
+        show('ok', 'Not found in this list', [
+          host + ' is not in the list of ' + total + ' known phishing domains.',
+          'That does not mean it is safe. Check the address carefully and use the official website or app instead of a link you received.'
+        ]);
+      }
+    }).catch(function () {
+      show('info', 'Could not load the list', ['The list could not be downloaded from GitHub. Check your connection and try again in a moment.']);
+    });
+  }
+
+  form.addEventListener('submit', function (e) { e.preventDefault(); check(input.value); });
+
+  // Optional: phishing-checker.html?d=example.com checks straight away
+  var q = new URLSearchParams(location.search).get('d');
+  if (q) { input.value = q; check(q); } else { loadFeed().catch(function () {}); }
+})();
+</script>
+<script data-goatcounter="https://cyberstuff.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
