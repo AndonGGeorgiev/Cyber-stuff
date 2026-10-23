@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bulgarian Phishing Domain Checker | cyber-stuff</title>
-<meta name="description" content="Check whether a website address appears in a public list of phishing domains impersonating Bulgarian couriers, government e-services and toll services.">
+<title>Domain Scam Checker | cyber-stuff</title>
+<meta name="description" content="Check whether a website address shows signs of being a scam or phishing site, using a live scan and the age of the domain.">
 <link rel="canonical" href="https://cyber-stuff.online/phishing-checker.html">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="stylesheet" href="style.css">
@@ -20,14 +20,14 @@
 </header>
 
 <main class="post checker">
-  <h1>Phishing Domain Checker</h1>
-  <p>Got a suspicious link in a text message or email? Paste the website address below to see whether it appears in a public list of phishing domains.</p>
+  <h1>Domain Scam Checker</h1>
+  <p>Got a suspicious link in a text message or email? Paste the website address below to get a risk estimate based on a live scan of the site and how old the domain is.</p>
 
   <form id="check-form" class="check-form" novalidate>
     <label for="check-input">Website address or domain</label>
     <div class="check-row">
-      <input type="text" id="check-input" name="domain" placeholder="e.g. speedy.bg-pk.cfd" autocomplete="off" autocapitalize="off" spellcheck="false">
-      <button type="submit">Check</button>
+      <input type="text" id="check-input" name="domain" placeholder="e.g. example.com" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit" id="check-btn">Check</button>
     </div>
   </form>
 
@@ -35,13 +35,33 @@
 
   <h2>How to read the result</h2>
   <ul>
-    <li><strong>Found in the list:</strong> do not open the link and do not enter any information.</li>
-    <li><strong>Not found:</strong> this does <em>not</em> mean the site is safe. New phishing sites appear every day, and this list only covers a few Bulgarian brands. Never enter passwords or card details through a link you received. Open the official website or app yourself instead.</li>
+    <li><strong>High risk:</strong> do not open the link and do not enter any information.</li>
+    <li><strong>Medium risk:</strong> some warning signs were found. Be very careful and check the address letter by letter.</li>
+    <li><strong>Low risk:</strong> no major red flags were found, but this does <em>not</em> mean the site is safe. New scam sites appear every day and may not be flagged yet. Never enter passwords or card details through a link you received. Open the official website or app yourself instead.</li>
+    <li><strong>Unknown:</strong> the site could not be scanned. It may be offline or blocking scanners.</li>
   </ul>
 
   <h2>About the data</h2>
-  <p>Your input is checked in your own browser and is not sent to this site.</p>
-  <p>This tool only compares an address with a list. It is not a security scan.</p>
+  <p>This checker is a small tool I built myself. It does not rely on one fixed list of bad websites. Instead, it combines several signals into a single risk score from 0 to 100:</p>
+  <ul>
+    <li><strong>A live scan:</strong> the domain is scanned with <a href="https://urlscan.io" target="_blank" rel="noopener noreferrer">urlscan.io</a>, a free public scanning service. If the domain was scanned very recently, that earlier result is reused.</li>
+    <li><strong>Security verdicts:</strong> whether urlscan.io, other security engines or its community have flagged the site as malicious.</li>
+    <li><strong>Brand imitation:</strong> whether the page looks like a well-known brand, such as a bank or a courier, while living on a different domain.</li>
+    <li><strong>Redirects:</strong> whether the site sends visitors on to a different domain than the one you entered.</li>
+    <li><strong>Domain age:</strong> how long ago the domain was registered. Scam sites are often only days or weeks old, so a very new domain adds to the score.</li>
+  </ul>
+  <p>The score is converted into a level: low (under 20), medium (20 to 49) or high (50 and above). The points given to each signal are my own estimates and may be adjusted over time.</p>
+
+  <h3>Your privacy</h3>
+  <p>Only the domain name is sent for checking. The rest of the link (path, parameters, anything after the domain) is removed in your browser before sending. The scan is submitted to urlscan.io as an unlisted scan, so it does not appear in their public search. Finished results are kept in the checking service's memory for up to an hour so that repeated checks are faster.</p>
+
+  <h3>Limits</h3>
+  <ul>
+    <li>This is an automated estimate, not a guarantee. A low score does not prove that a site is safe, because brand-new scam sites often have not been flagged yet.</li>
+    <li>Some sites block scanners or are offline, in which case the result is "unknown".</li>
+    <li>The number of checks is limited per visitor and per day, so you may occasionally be asked to wait.</li>
+    <li>The first check after a quiet period can take up to a minute, because the checking service has to wake up.</li>
+  </ul>
 </main>
 
 <footer id="disclaimer">
@@ -53,13 +73,13 @@
 
 <script>
 (function () {
-  var FEED_URL = 'https://raw.githubusercontent.com/georgi-i/detectopod/main/feed/phishing_feed.json';
+  // Address of your checking service on Render (keep the /check at the end)
+  var API_URL = 'https://YOUR-APP.onrender.com/check';
 
   var form = document.getElementById('check-form');
   var input = document.getElementById('check-input');
+  var btn = document.getElementById('check-btn');
   var out = document.getElementById('check-result');
-  var index = null;       // domain -> feed entry
-  var loading = null;     // promise while the list is downloading
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -85,55 +105,6 @@
     return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : '';
   }
 
-  function loadFeed() {
-    if (index) return Promise.resolve(index);
-    if (loading) return loading;
-    loading = fetch(FEED_URL, { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (data) {
-        if (!Array.isArray(data)) data = (data && data.domains) || [];
-        var map = {};
-        data.forEach(function (item) {
-          var d = norm(typeof item === 'string' ? item : item && item.domain);
-          if (d) map[d] = (typeof item === 'string') ? { domain: d } : item;
-        });
-        index = map;
-        return index;
-      })
-      .catch(function (e) { loading = null; throw e; });
-    return loading;
-  }
-
-  function lookup(host) {
-    var parts = host.split('.');
-    for (var i = 0; i <= parts.length - 2; i++) {
-      var cand = parts.slice(i).join('.');
-      if (index[cand]) return { type: i === 0 ? 'exact' : 'parent', entry: index[cand], matched: cand };
-    }
-    var kids = Object.keys(index).filter(function (d) { return d.length > host.length && d.slice(-(host.length + 1)) === '.' + host; });
-    if (kids.length) return { type: 'children', kids: kids.slice(0, 5), total: kids.length };
-    return null;
-  }
-
-  function dateOnly(s) {
-    var d = new Date(s);
-    return isNaN(d) ? '' : d.toISOString().slice(0, 10);
-  }
-
-  function details(entry) {
-    var dl = el('dl', 'check-details');
-    function row(k, v) { if (v === '' || v == null) return; dl.appendChild(el('dt', null, k)); dl.appendChild(el('dd', null, v)); }
-    row('Domain', entry.domain);
-    if (entry.score != null) row('Risk score', entry.score + ' / 100');
-    row('First detected', entry.detected_at ? dateOnly(entry.detected_at) : '');
-    row('Keywords', Array.isArray(entry.keywords) ? entry.keywords.join(', ') : '');
-    var a = entry.llm_analysis;
-    if (a) {
-      row('Automated review', [a.decision, a.threat_level, a.confidence != null ? a.confidence + '% confidence' : ''].filter(Boolean).join(' · '));
-    }
-    return dl;
-  }
-
   function show(kind, title, lines, extra) {
     out.textContent = '';
     var box = el('div', 'check-box ' + kind);
@@ -143,46 +114,81 @@
     out.appendChild(box);
   }
 
+  var KIND = { low: 'ok', medium: 'warn', high: 'bad', unknown: 'info' };
+  var TITLE = {
+    low: 'No major red flags found',
+    medium: 'Some warning signs',
+    high: 'High risk: likely a scam',
+    unknown: 'Could not assess this domain'
+  };
+  var TAG = { high: 'Red flag: ', medium: 'Warning: ', good: 'Good sign: ', info: 'Note: ' };
+
+  function render(d) {
+    var wrap = el('div');
+
+    var ul = el('ul');
+    (d.reasons || []).forEach(function (r) {
+      ul.appendChild(el('li', null, (TAG[r.level] || '') + r.text));
+    });
+    wrap.appendChild(ul);
+
+    var dl = el('dl', 'check-details');
+    function row(k, v) { if (v === '' || v == null) return; dl.appendChild(el('dt', null, k)); dl.appendChild(el('dd', null, String(v))); }
+    var s = d.signals || {};
+    row('Domain', d.domain);
+    row('Risk score', d.risk_score + ' / 100');
+    if (s.domain_age_days != null) row('Domain age', s.domain_age_days + ' days');
+    row('Server country', s.country);
+    row('Certificate issuer', s.tls_issuer);
+    wrap.appendChild(dl);
+
+    if (d.report_url) {
+      var p = el('p');
+      var a = el('a', null, 'View the full urlscan.io report');
+      a.href = d.report_url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      p.appendChild(a);
+      wrap.appendChild(p);
+    }
+    wrap.appendChild(el('p', null, d.disclaimer || ''));
+
+    var level = KIND[d.risk_level] ? d.risk_level : 'unknown';
+    show(KIND[level], TITLE[level], [d.domain + ' scored ' + d.risk_score + ' out of 100.'], wrap);
+  }
+
   function check(raw) {
     var host = hostFrom(raw);
     if (!host) {
       show('info', 'Enter a valid address', ['Type or paste a website address such as example.com or https://example.com/page.']);
       return;
     }
-    show('info', 'Checking ' + host + '…', []);
-    loadFeed().then(function () {
-      var hit = lookup(host);
-      var total = Object.keys(index).length;
-      if (hit && hit.type === 'exact') {
-        show('bad', 'Found in the phishing list', [
-          host + ' is listed as a phishing domain. Do not open it and do not enter any information.',
-          'If you already entered a password or card details, change that password right away and contact your bank.'
-        ], details(hit.entry));
-      } else if (hit && hit.type === 'parent') {
-        show('bad', 'Its parent domain is in the phishing list', [
-          host + ' belongs to ' + hit.matched + ', which is listed as a phishing domain. Do not open it.'
-        ], details(hit.entry));
-      } else if (hit && hit.type === 'children') {
-        show('warn', 'Not listed, but related addresses are', [
-          host + ' is not in the list, but ' + hit.total + ' address' + (hit.total === 1 ? '' : 'es') + ' under it ' + (hit.total === 1 ? 'is' : 'are') + ': ' + hit.kids.join(', ') + '.',
-          'Be careful with this domain.'
-        ]);
-      } else {
-        show('ok', 'Not found in this list', [
-          host + ' is not in the list of ' + total + ' known phishing domains.',
-          'That does not mean it is safe. Check the address carefully and use the official website or app instead of a link you received.'
-        ]);
-      }
-    }).catch(function () {
-      show('info', 'Could not load the list', ['The list could not be downloaded from GitHub. Check your connection and try again in a moment.']);
-    });
+    show('info', 'Checking ' + host + '…', ['Scanning the site. This can take up to a minute.']);
+    btn.disabled = true;
+
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 100000);
+
+    fetch(API_URL + '?domain=' + encodeURIComponent(host), { signal: ctrl.signal })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (data) {
+          if (!r.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'HTTP ' + r.status);
+          return data;
+        });
+      })
+      .then(render)
+      .catch(function (e) {
+        var msg = e.name === 'AbortError'
+          ? 'The check took too long. Try again in a moment.'
+          : (e.message && e.message.indexOf('HTTP') !== 0 && e.message !== 'Failed to fetch' ? e.message : 'The checking service could not be reached. Try again in a moment.');
+        show('info', 'Could not check this domain', [msg]);
+      })
+      .then(function () { clearTimeout(timer); btn.disabled = false; });
   }
 
   form.addEventListener('submit', function (e) { e.preventDefault(); check(input.value); });
 
   // Optional: phishing-checker.html?d=example.com checks straight away
   var q = new URLSearchParams(location.search).get('d');
-  if (q) { input.value = q; check(q); } else { loadFeed().catch(function () {}); }
+  if (q) { input.value = q; check(q); }
 })();
 </script>
 <script data-goatcounter="https://cyberstuff.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
