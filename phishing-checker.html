@@ -74,7 +74,7 @@
 <script>
 (function () {
   // Address of your checking service on Render (keep the /check at the end)
-  var API_URL = 'https://phishcrowl.onrender.com/check';
+  var API_URL = 'https://YOUR-APP.onrender.com/check';
 
   var form = document.getElementById('check-form');
   var input = document.getElementById('check-input');
@@ -136,7 +136,7 @@
     function row(k, v) { if (v === '' || v == null) return; dl.appendChild(el('dt', null, k)); dl.appendChild(el('dd', null, String(v))); }
     var s = d.signals || {};
     row('Domain', d.domain);
-    row('Risk score', d.risk_score + ' / 100');
+    if (d.risk_level !== 'unknown') row('Risk score', d.risk_score + ' / 100');
     if (s.domain_age_days != null) row('Domain age', s.domain_age_days + ' days');
     row('Server country', s.country);
     row('Certificate issuer', s.tls_issuer);
@@ -152,7 +152,7 @@
     wrap.appendChild(el('p', null, d.disclaimer || ''));
 
     var level = KIND[d.risk_level] ? d.risk_level : 'unknown';
-    show(KIND[level], TITLE[level], [d.domain + ' scored ' + d.risk_score + ' out of 100.'], wrap);
+    show(KIND[level], TITLE[level], level === 'unknown' ? [] : [d.domain + ' scored ' + d.risk_score + ' out of 100.'], wrap);
   }
 
   function check(raw) {
